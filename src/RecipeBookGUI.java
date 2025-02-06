@@ -37,9 +37,12 @@ public class RecipeBookGUI extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel addRecipePanel = new JPanel();
     /* Optional future code
-    private JPanel lookForIngridientsPanel = new JPanel(); */
+    private JPanel lookForIngridientsPanel = new JPanel(); */  
 
     private CardLayout cardlayout = new CardLayout();
+
+
+  
 
     public void RecipeBook() {
     	// Add menu to a window
@@ -47,9 +50,24 @@ public class RecipeBookGUI extends JFrame {
         fileMenu.add(fileMenuLoad);
         fileMenu.add(fileMenuExport);
         fileMenu.add(fileMenuImport);
-        mb.add(fileMenu);  
+        mb.add(fileMenu); 
+        recipeMenu.add(recipeAdd);
+        recipeMenu.add(recipeList);
+        mb.add(recipeMenu); 
 
         setJMenuBar(mb);    
+
+        Container contentPane = this.getContentPane();
+        contentPane.setLayout(cardlayout);
+
+        // Add panel to a frame
+        contentPane.add(mainPanel, "Panel 1");
+        contentPane.add(addRecipePanel, "Panel 2");
+
+        mainPanel.setLayout(new GridLayout(0, 2));
+
+
+
     }
 
     public static void main(String[] args) {
@@ -60,8 +78,8 @@ public class RecipeBookGUI extends JFrame {
         window.setLocationRelativeTo(null); // Center the frame
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // set the size of the frame
-        // m.setSize(300, 500);
-        // m.setPreferredSize(new Dimension(200, 300));
+        // window.setSize(300, 500);
+        window.setPreferredSize(new Dimension(200, 300));
         // show the frame
         window.pack();
         window.setVisible(true);

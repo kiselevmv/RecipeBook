@@ -29,7 +29,7 @@ Fields:
 - Quantity of ingridients
 - Picture (optional)
 
-Class RecipeBook:
+Class RecipeBook: - Arseni & Mikhail
 Methods:
 - Save to file (serialization)
 - Load from file (serialized)
@@ -48,7 +48,7 @@ Input recipe window - Mikhail
 Look for recipes with selected ingridients - Mikhail
 
 
-17.02 - Optional feature and code polishing.
+17.02 - Optional feature and code polishing.  - Arseni & Mikhail
 
 ## Final goal
 

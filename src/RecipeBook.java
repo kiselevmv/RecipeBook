@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,5 +61,14 @@ public class RecipeBook implements Serializable{
         return null;
     }
 
-
+    // Save to file (serialization)
+    public void saveToFile(){
+        try {FileOutputStream fos = new FileOutputStream("RecipeBook.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(recipes);
+            oos.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

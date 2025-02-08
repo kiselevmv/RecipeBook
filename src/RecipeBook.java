@@ -1,6 +1,7 @@
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,10 +64,23 @@ public class RecipeBook implements Serializable{
 
     // Save to file (serialization)
     public void saveToFile(){
-        try {FileOutputStream fos = new FileOutputStream("RecipeBook.bin");
+        try {
+            FileOutputStream fos = new FileOutputStream("RecipeBook.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(recipes);
             oos.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Load from file (deserialization)
+    public void loadFromFile(){
+        try {
+            FileInputStream fis = new FileInputStream("RecipeBook.bin");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ois.readObject();
+            ois.close();
         } catch (Exception e) {
             System.out.println(e);
         }

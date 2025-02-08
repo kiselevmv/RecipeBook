@@ -3,11 +3,12 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.lang.System.*;
 
 public class RecipeBookGUI extends JFrame {  
 
 	// create a menubar
-    private JMenuBar mb = new JMenuBar();
+    private JMenuBar menuBar = new JMenuBar();
 
     // create a menu
     private JMenu fileMenu = new JMenu("File");
@@ -31,6 +32,9 @@ public class RecipeBookGUI extends JFrame {
     // private JLabel asID = new JLabel("Student's ID");
     // private JLabel asName = new JLabel("Student's name");
 
+    // Create a buttons
+    private JButton btnAddRecipe = new JButton("Add recipe");
+
     // private RecipeBook recipeBook = new RecipeBook();
 
     // Use the panel to group elements
@@ -42,20 +46,30 @@ public class RecipeBookGUI extends JFrame {
     private CardLayout cardlayout = new CardLayout();
 
 
-  
-
-    public void RecipeBook() {
+    public RecipeBookGUI() {
     	// Add menu to a window
         fileMenu.add(fileMenuSave);
         fileMenu.add(fileMenuLoad);
         fileMenu.add(fileMenuExport);
         fileMenu.add(fileMenuImport);
-        mb.add(fileMenu); 
+        menuBar.add(fileMenu); 
         recipeMenu.add(recipeAdd);
         recipeMenu.add(recipeList);
-        mb.add(recipeMenu); 
+        menuBar.add(recipeMenu); 
 
-        setJMenuBar(mb);    
+        setJMenuBar(menuBar);    
+
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(new JLabel("Input"), BorderLayout.CENTER);
+        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);
+        
+
+        addRecipePanel.setLayout(new GridLayout(2, 2));
+        addRecipePanel.add(new JLabel("Input"));
+        addRecipePanel.add(btnAddRecipe);
+        // Fill the rest of layout
+        mainPanel.add(new JLabel(""));
+        mainPanel.add(new JLabel(""));
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(cardlayout);
@@ -64,9 +78,11 @@ public class RecipeBookGUI extends JFrame {
         contentPane.add(mainPanel, "Panel 1");
         contentPane.add(addRecipePanel, "Panel 2");
 
-        mainPanel.setLayout(new GridLayout(0, 2));
+        mainPanel.setVisible(true);
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        System.out.println ("Constructor created");
 
     }
 
@@ -76,14 +92,10 @@ public class RecipeBookGUI extends JFrame {
         RecipeBookGUI window = new RecipeBookGUI();
         window.setTitle("Recipe book");
         window.setLocationRelativeTo(null); // Center the frame
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // set the size of the frame
-        // window.setSize(300, 500);
         window.setPreferredSize(new Dimension(200, 300));
+
         // show the frame
         window.pack();
         window.setVisible(true);
     }
-
-
 }

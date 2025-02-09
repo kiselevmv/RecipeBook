@@ -27,15 +27,19 @@ public class RecipeBookGUI extends JFrame {
     /* Optional menu items
     private JMenuItem recipeLookForIngridients = new JMenuItem("Look for ingridients"); */
 
-    // create a labels
-    // private JLabel labelRecipe = new JLabel("no task "); 
-    // private JLabel asID = new JLabel("Student's ID");
-    // private JLabel asName = new JLabel("Student's name");
+    // Create a labels
+    private JLabel labRecipeName = new JLabel("Recipe name"); 
+    private JLabel labRecipeDescription = new JLabel("Recipe desctription");
+    private JLabel labRecipeTags = new JLabel("Tags (coma separated");
 
     // Create a buttons
     private JButton btnAddRecipe = new JButton("Add recipe");
+    private JButton btnRecipeBack = new JButton("Back");
 
-    // private RecipeBook recipeBook = new RecipeBook();
+    // Create data input
+    private JTextField txtRecipeName = new JTextField(30);
+    private JTextField txtRecipeDescription = new JTextField(200);
+    private JTextField txtRecipeTags = new JTextField(100);
 
     // Use the panel to group elements
     private JPanel mainPanel = new JPanel();
@@ -44,6 +48,10 @@ public class RecipeBookGUI extends JFrame {
     private JPanel lookForIngridientsPanel = new JPanel(); */  
 
     private CardLayout cardlayout = new CardLayout();
+
+    private ActionListener addRecipeListener = new addRecipeListener();
+
+    private RecipeBook recipeBook = new RecipeBook();
 
 
     public RecipeBookGUI() {
@@ -64,9 +72,16 @@ public class RecipeBookGUI extends JFrame {
         mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);
         
 
-        addRecipePanel.setLayout(new GridLayout(2, 2));
-        addRecipePanel.add(new JLabel("Input"));
+        addRecipePanel.setLayout(new GridLayout(4, 2));
+        addRecipePanel.add(labRecipeName);
+        addRecipePanel.add(txtRecipeName);
+        addRecipePanel.add(labRecipeDescription);
+        addRecipePanel.add(txtRecipeDescription);
+        addRecipePanel.add(labRecipeTags);
+        addRecipePanel.add(txtRecipeTags);
         addRecipePanel.add(btnAddRecipe);
+        addRecipePanel.add(btnRecipeBack);
+
         // Fill the rest of layout
         mainPanel.add(new JLabel(""));
         mainPanel.add(new JLabel(""));
@@ -81,6 +96,8 @@ public class RecipeBookGUI extends JFrame {
         mainPanel.setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        recipeAdd.addActionListener(addRecipeListener);
 
         System.out.println ("Constructor created");
 
@@ -97,5 +114,13 @@ public class RecipeBookGUI extends JFrame {
         // show the frame
         window.pack();
         window.setVisible(true);
+    }
+
+    class addRecipeListener implements ActionListener { // inner class
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainPanel.setVisible(false);
+            addRecipePanel.setVisible(true);
+        }
     }
 }

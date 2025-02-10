@@ -51,6 +51,8 @@ public class RecipeBookGUI extends JFrame {
 
     private ActionListener addRecipeListener = new addRecipeListener();
     private ActionListener backRecipeListener = new backRecipeListener();
+    private ActionListener saveRecipeListener = new backRecipeListener();
+    private ActionListener loadRecipeListener = new backRecipeListener();
 
     private RecipeBook recipeBook = new RecipeBook();
 
@@ -100,6 +102,8 @@ public class RecipeBookGUI extends JFrame {
 
         recipeAdd.addActionListener(addRecipeListener);
         btnRecipeBack.addActionListener(backRecipeListener);
+        fileMenuSave.addActionListener(saveRecipeListener);
+        fileMenuLoad.addActionListener(loadRecipeListener);
 
         System.out.println ("Constructor created");
 
@@ -131,6 +135,14 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainPanel.setVisible(true);
             addRecipePanel.setVisible(false);
+        }
+    }
+
+    class saveRecipeListener implements ActionListener { // inner class
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Going to save recipes to a file.");
+            recipeBook.recipeBookSave();
         }
     }
 }

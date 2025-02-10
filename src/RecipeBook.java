@@ -63,12 +63,13 @@ public class RecipeBook implements Serializable{
     }
 
     // Save to file (serialization)
-    public void saveToFile(){
+    public void recipeBookSave(){
         try {
             FileOutputStream fos = new FileOutputStream("RecipeBook.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(recipes);
             oos.close();
+            System.out.println("Serialized object saved to a file");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -81,6 +82,7 @@ public class RecipeBook implements Serializable{
             ObjectInputStream ois = new ObjectInputStream(fis);
             ois.readObject();
             ois.close();
+
         } catch (Exception e) {
             System.out.println(e);
         }

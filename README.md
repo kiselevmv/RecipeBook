@@ -31,16 +31,25 @@ Fields:
 
 Class RecipeBook: - Arseni & Mikhail
 Methods:
-- Save to file (serialization)
-- Load from file (serialized)
-- Save to file (text/html/xml) (optional)
-- Load from file (text/xml) (optional)
-- Add new recipe
-- Remove recipe
-- Select recipes with selected ingridients [filter] (optional)
+- recipeBookSave; 	Save to file (serialization)
+- recipeBookLoad;	Load from file (serialized)
+- recipeBookSaveText;	Save to file (text/html/xml) (optional)
+- recipeBookLoadText;	Load from file (text/xml) (optional)
+- recipeBookAdd;	Add new recipe
+- recipeBookRemove;	Remove recipe
+- recipeBookList;	List all recipes from Recipe book.
+- recipeBookFilter;	Select recipes with selected ingridients [filter] (optional)
 
 Fields:
 - ArrayList<Recipe>
+
+Class Recipe; - Arseni & Mikhail
+Getters:
+- getRecipeName;	Get recipe Name.
+- getRecipeDescription;	Get recipe desctiption.
+- getRecipeIngredients();	Get recipe ingridients.
+- getRecipeQuantity;	Get quontities of ingridients for a recipe.
+
 
 13.02 - GUI application
 Main window - Mikhail

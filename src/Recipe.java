@@ -20,13 +20,13 @@ public class Recipe implements Serializable {
     public String getRecipeName() {
         return recipeName;
     }
-    public String getDescription() {
+    public String getRecipeDescription() {
         return description;
     }
-    public ArrayList<String> getIngredients() {
+    public ArrayList<String> getRecipeIngredients() {
         return ingredients;
     }
-    public ArrayList<String> getQuantity() {
+    public ArrayList<String> getRecipeQuantity() {
         return quantity;
     }
 }

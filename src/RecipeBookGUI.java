@@ -50,6 +50,7 @@ public class RecipeBookGUI extends JFrame {
     private CardLayout cardlayout = new CardLayout();
 
     private ActionListener addRecipeListener = new addRecipeListener();
+    private ActionListener backRecipeListener = new backRecipeListener();
 
     private RecipeBook recipeBook = new RecipeBook();
 
@@ -98,6 +99,7 @@ public class RecipeBookGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         recipeAdd.addActionListener(addRecipeListener);
+        btnRecipeBack.addActionListener(backRecipeListener);
 
         System.out.println ("Constructor created");
 
@@ -121,6 +123,14 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainPanel.setVisible(false);
             addRecipePanel.setVisible(true);
+        }
+    }
+
+    class backRecipeListener implements ActionListener { // inner class
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainPanel.setVisible(true);
+            addRecipePanel.setVisible(false);
         }
     }
 }

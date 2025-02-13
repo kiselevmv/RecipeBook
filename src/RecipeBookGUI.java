@@ -51,10 +51,12 @@ public class RecipeBookGUI extends JFrame {
 
     private ActionListener addRecipeListener = new addRecipeListener();
     private ActionListener backRecipeListener = new backRecipeListener();
-    private ActionListener saveRecipeListener = new backRecipeListener();
-    private ActionListener loadRecipeListener = new backRecipeListener();
+    private ActionListener saveRecipeListener = new saveRecipeListener();
+    // private ActionListener loadRecipeListener = new loadRecipeListener();
 
     private RecipeBook recipeBook = new RecipeBook();
+
+    // private JList recipeList = new JList;
 
 
     public RecipeBookGUI() {
@@ -70,10 +72,11 @@ public class RecipeBookGUI extends JFrame {
 
         setJMenuBar(menuBar);    
 
+        String recipes[]= recipeBook.recipeList();
+        JList recipeList = new JList(recipes);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(new JLabel("Input"), BorderLayout.CENTER);
-        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);
-        
+        mainPanel.add(recipeList, BorderLayout.CENTER);
+        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);        
 
         addRecipePanel.setLayout(new GridLayout(4, 2));
         addRecipePanel.add(labRecipeName);
@@ -84,10 +87,6 @@ public class RecipeBookGUI extends JFrame {
         addRecipePanel.add(txtRecipeTags);
         addRecipePanel.add(btnAddRecipe);
         addRecipePanel.add(btnRecipeBack);
-
-        // Fill the rest of layout
-        mainPanel.add(new JLabel(""));
-        mainPanel.add(new JLabel(""));
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(cardlayout);
@@ -103,7 +102,7 @@ public class RecipeBookGUI extends JFrame {
         recipeAdd.addActionListener(addRecipeListener);
         btnRecipeBack.addActionListener(backRecipeListener);
         fileMenuSave.addActionListener(saveRecipeListener);
-        fileMenuLoad.addActionListener(loadRecipeListener);
+        // fileMenuLoad.addActionListener(loadRecipeListener);
 
         System.out.println ("Constructor created");
 

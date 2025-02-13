@@ -13,6 +13,7 @@ public class RecipeBook implements Serializable{
     public RecipeBook() {
         this.recipes = new ArrayList<>();
         initializeDefaultRecipes();
+        this.recipeBookLoad();
     }
 
     // Initialize default recipes
@@ -62,6 +63,15 @@ public class RecipeBook implements Serializable{
         return null;
     }
 
+    // Return a list of recipes
+    public String[] recipeList() {
+    ArrayList<String> recipeList = new ArrayList();	
+    	for (Recipe recipe : recipes) {
+    		recipeList.add(recipe.getRecipeName());
+    	}
+    	return recipeList.toArray(new String[0]);
+    }
+
     // Save to file (serialization)
     public void recipeBookSave(){
         try {
@@ -76,7 +86,7 @@ public class RecipeBook implements Serializable{
     }
 
     // Load from file (deserialization)
-    public void loadFromFile(){
+    public void recipeBookLoad(){
         try {
             FileInputStream fis = new FileInputStream("RecipeBook.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);

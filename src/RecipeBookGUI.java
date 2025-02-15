@@ -104,8 +104,6 @@ public class RecipeBookGUI extends JFrame {
         fileMenuSave.addActionListener(saveRecipeListener);
         // fileMenuLoad.addActionListener(loadRecipeListener);
 
-        System.out.println ("Constructor created");
-
     }
 
     public static void main(String[] args) {

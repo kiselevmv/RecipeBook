@@ -43,8 +43,8 @@ public class RecipeBookGUI extends JFrame {
     private JTextField txtRecipeDescription = new JTextField(200);
     private JTextField txtRecipeTags = new JTextField(100);
 
+    // Create a List of recipes
     private JList<String> lstRecipesList = new JList<>(); 
-
 
     // Use the panel to group elements
     private JPanel mainPanel = new JPanel();
@@ -67,7 +67,7 @@ public class RecipeBookGUI extends JFrame {
 
 
     public RecipeBookGUI() {
-    	// Add menu to a window
+    	// Section: Add menu to a window
         fileMenu.add(fileMenuSave);
         fileMenu.add(fileMenuLoad);
         fileMenu.add(fileMenuExport);
@@ -76,16 +76,18 @@ public class RecipeBookGUI extends JFrame {
         recipeMenu.add(recipeAdd);
         recipeMenu.add(recipeList);
         menuBar.add(recipeMenu); 
+        setJMenuBar(menuBar);
+        // End menu section    
 
-        setJMenuBar(menuBar);    
-
-        String[] recipes= recipeBook.recipeList();
-        // JList recipeList = new JList(recipes);
+        // Section: create main screen
+        String[] recipes = recipeBook.recipeList();
         lstRecipesList.setListData(recipes);
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(lstRecipesList, BorderLayout.CENTER);
-        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);        
+        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);   
+        // End section: create main screen     
 
+        // Section: create add recipe screen
         addRecipePanel.setLayout(new GridLayout(4, 2));
         addRecipePanel.add(labRecipeName);
         addRecipePanel.add(txtRecipeName);
@@ -95,6 +97,7 @@ public class RecipeBookGUI extends JFrame {
         addRecipePanel.add(txtRecipeTags);
         addRecipePanel.add(btnAddRecipe);
         addRecipePanel.add(btnRecipeBack);
+        // End section: create add recipe screen
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(cardlayout);
@@ -107,26 +110,25 @@ public class RecipeBookGUI extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Section: Apply action listeners to GUI elements
         recipeAdd.addActionListener(addRecipeListener);
         btnRecipeBack.addActionListener(backRecipeListener);
         fileMenuSave.addActionListener(saveRecipeListener);
         fileMenuLoad.addActionListener(loadRecipeListener);
         btnAddRecipe.addActionListener(saveNewRecipeListener);
+        // End section: apply action listeners
 
 
     }
 
     public static void main(String[] args) {
 		
-        // create an object of the class
-        RecipeBookGUI window = new RecipeBookGUI();
-        window.setTitle("Recipe book");
-        window.setLocationRelativeTo(null); // Center the frame
+        RecipeBookGUI window = new RecipeBookGUI(); // Create an object of the GUI class
+        window.setTitle("Recipe book");             // Set window title
+        window.setLocationRelativeTo(null);         // Center the frame
         window.setPreferredSize(new Dimension(200, 300));
-
-        // show the frame
-        window.pack();
-        window.setVisible(true);
+        window.pack();                              // Populate a window with elemnts
+        window.setVisible(true);                    // Show the frame
     }
 
     class addRecipeListener implements ActionListener { // inner class
@@ -134,6 +136,7 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainPanel.setVisible(false);
             addRecipePanel.setVisible(true);
+            // Hide main form and show "add recipe" form
         }
     }
 
@@ -142,14 +145,15 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainPanel.setVisible(true);
             addRecipePanel.setVisible(false);
+            // Show main form and hide "add recipe" form
         }
     }
 
     class saveRecipeListener implements ActionListener { // inner class
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Going to save recipes to a file.");
             recipeBook.recipeBookSave();
+            // Save recipes list to a file
         }
     }
 
@@ -178,9 +182,10 @@ public class RecipeBookGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             recipeBook.recipeBookLoad();
+            // Load recipe book from a file
             String recipes[] = recipeBook.recipeList();
-            // String recipes[] = {"Updated 1", "Updated 2", "Updated 3"};
             lstRecipesList.setListData(recipes);
+            // Update list of recipes with new recipes
         }
     }
 }

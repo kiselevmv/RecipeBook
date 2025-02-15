@@ -43,7 +43,8 @@ public class RecipeBookGUI extends JFrame {
     private JTextField txtRecipeDescription = new JTextField(200);
     private JTextField txtRecipeTags = new JTextField(100);
 
-    private JList<String> recipesList = new JList<>(); 
+    private JList<String> lstRecipesList = new JList<>(); 
+
 
     // Use the panel to group elements
     private JPanel mainPanel = new JPanel();
@@ -53,15 +54,16 @@ public class RecipeBookGUI extends JFrame {
 
     private CardLayout cardlayout = new CardLayout();
 
+    // Begin ActionListener section.
+    // All callback functions for GUI are here
     private ActionListener addRecipeListener = new addRecipeListener();
     private ActionListener backRecipeListener = new backRecipeListener();
     private ActionListener saveRecipeListener = new saveRecipeListener();
     private ActionListener loadRecipeListener = new loadRecipeListener();
     private ActionListener saveNewRecipeListener = new saveNewRecipeListener(); 
+    // End Action Listener section
 
     private RecipeBook recipeBook = new RecipeBook();
-
-    // private JList recipeList = new JList;
 
 
     public RecipeBookGUI() {
@@ -79,9 +81,9 @@ public class RecipeBookGUI extends JFrame {
 
         String[] recipes= recipeBook.recipeList();
         // JList recipeList = new JList(recipes);
-        recipesList.setListData(recipes);
+        lstRecipesList.setListData(recipes);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(recipesList, BorderLayout.CENTER);
+        mainPanel.add(lstRecipesList, BorderLayout.CENTER);
         mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);        
 
         addRecipePanel.setLayout(new GridLayout(4, 2));
@@ -161,14 +163,14 @@ public class RecipeBookGUI extends JFrame {
             String recipeDescription = txtRecipeDescription.getText();
             Recipe newRecipe = new Recipe(recipeName, recipeDescription, ingridients, quantity, tags);
             recipeBook.addRecipe(newRecipe); 
-            // Create new recird with new recipe
+            // Create a record with new recipe
             String recipes[]= recipeBook.recipeList();
-            recipesList.setListData(recipes);
-            // Update LisTView with new data
+            lstRecipesList.setListData(recipes);
+            // Update LisTView with updated recipes list
             txtRecipeName.setText("");
             txtRecipeDescription.setText("");
-            // Clear fields
-            System.out.println("Save new recipe to list");
+            txtRecipeTags.setText("");
+            // Clear all fields before new input
         }
     }
 
@@ -178,7 +180,7 @@ public class RecipeBookGUI extends JFrame {
             recipeBook.recipeBookLoad();
             String recipes[] = recipeBook.recipeList();
             // String recipes[] = {"Updated 1", "Updated 2", "Updated 3"};
-            recipesList.setListData(recipes);
+            lstRecipesList.setListData(recipes);
         }
     }
 }

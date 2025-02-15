@@ -13,7 +13,7 @@ public class RecipeBook implements Serializable{
     public RecipeBook() {
         this.recipes = new ArrayList<>();
         initializeDefaultRecipes();
-        this.recipeBookLoad();
+        // recipeBookLoad();
     }
 
     // Initialize default recipes
@@ -92,6 +92,7 @@ public class RecipeBook implements Serializable{
             ObjectInputStream ois = new ObjectInputStream(fis);
             ois.readObject();
             ois.close();
+            System.out.println("Object has been deserialized");
 
         } catch (Exception e) {
             System.out.println(e);

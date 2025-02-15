@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.lang.System.*;
+import java.util.ArrayList;
 
 public class RecipeBookGUI extends JFrame {  
 
@@ -35,11 +36,14 @@ public class RecipeBookGUI extends JFrame {
     // Create a buttons
     private JButton btnAddRecipe = new JButton("Add recipe");
     private JButton btnRecipeBack = new JButton("Back");
+    private JButton btnSaveRecipe = new JButton("Save recipe");
 
     // Create data input
     private JTextField txtRecipeName = new JTextField(30);
     private JTextField txtRecipeDescription = new JTextField(200);
     private JTextField txtRecipeTags = new JTextField(100);
+
+    private JList<String> recipesList = new JList<>(); 
 
     // Use the panel to group elements
     private JPanel mainPanel = new JPanel();
@@ -52,7 +56,8 @@ public class RecipeBookGUI extends JFrame {
     private ActionListener addRecipeListener = new addRecipeListener();
     private ActionListener backRecipeListener = new backRecipeListener();
     private ActionListener saveRecipeListener = new saveRecipeListener();
-    // private ActionListener loadRecipeListener = new loadRecipeListener();
+    private ActionListener loadRecipeListener = new loadRecipeListener();
+    private ActionListener saveNewRecipeListener = new saveNewRecipeListener(); 
 
     private RecipeBook recipeBook = new RecipeBook();
 
@@ -72,10 +77,11 @@ public class RecipeBookGUI extends JFrame {
 
         setJMenuBar(menuBar);    
 
-        String recipes[]= recipeBook.recipeList();
-        JList recipeList = new JList(recipes);
+        String[] recipes= recipeBook.recipeList();
+        // JList recipeList = new JList(recipes);
+        recipesList.setListData(recipes);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(recipeList, BorderLayout.CENTER);
+        mainPanel.add(recipesList, BorderLayout.CENTER);
         mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);        
 
         addRecipePanel.setLayout(new GridLayout(4, 2));
@@ -102,7 +108,9 @@ public class RecipeBookGUI extends JFrame {
         recipeAdd.addActionListener(addRecipeListener);
         btnRecipeBack.addActionListener(backRecipeListener);
         fileMenuSave.addActionListener(saveRecipeListener);
-        // fileMenuLoad.addActionListener(loadRecipeListener);
+        fileMenuLoad.addActionListener(loadRecipeListener);
+        btnAddRecipe.addActionListener(saveNewRecipeListener);
+
 
     }
 
@@ -140,6 +148,37 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             System.out.println("Going to save recipes to a file.");
             recipeBook.recipeBookSave();
+        }
+    }
+
+    class saveNewRecipeListener implements ActionListener { //inner class
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<String> ingridients = new ArrayList<String>();
+            ArrayList<String> quantity = new ArrayList<String>();
+            ArrayList<String> tags = new ArrayList<String>();
+            String recipeName = txtRecipeName.getText();
+            String recipeDescription = txtRecipeDescription.getText();
+            Recipe newRecipe = new Recipe(recipeName, recipeDescription, ingridients, quantity, tags);
+            recipeBook.addRecipe(newRecipe); 
+            // Create new recird with new recipe
+            String recipes[]= recipeBook.recipeList();
+            recipesList.setListData(recipes);
+            // Update LisTView with new data
+            txtRecipeName.setText("");
+            txtRecipeDescription.setText("");
+            // Clear fields
+            System.out.println("Save new recipe to list");
+        }
+    }
+
+    class loadRecipeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            recipeBook.recipeBookLoad();
+            String recipes[] = recipeBook.recipeList();
+            // String recipes[] = {"Updated 1", "Updated 2", "Updated 3"};
+            recipesList.setListData(recipes);
         }
     }
 }

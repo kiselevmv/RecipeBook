@@ -81,7 +81,7 @@ public class RecipeBook implements Serializable{
             oos.close();
             System.out.println("Serialized object saved to a file");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error saving recipe book: " + e.getMessage());
         }
     }
 
@@ -90,12 +90,12 @@ public class RecipeBook implements Serializable{
         try {
             FileInputStream fis = new FileInputStream("RecipeBook.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            ois.readObject();
+            recipes = (ArrayList<Recipe>) ois.readObject();
             ois.close();
             System.out.println("Object has been deserialized");
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error loading recipe book: " + e.getMessage());
         }
     }
 }

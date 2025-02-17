@@ -10,6 +10,9 @@ public class RecipeBookGUI extends JFrame {
 
     private RecipeBook recipeBook = new RecipeBook();
 
+    //Declare GUI elements
+
+    // Menu options
 	// create a menubar
     private JMenuBar menuBar = new JMenuBar();
 
@@ -29,17 +32,20 @@ public class RecipeBookGUI extends JFrame {
     private JMenuItem recipeFind = new JMenuItem("Find recipe");
     /* Optional menu items
     private JMenuItem recipeLookForIngridients = new JMenuItem("Look for ingridients"); */
+    // End menu
 
     // Create a labels
     private JLabel labRecipeName = new JLabel("Recipe name"); 
     private JLabel labRecipeDescription = new JLabel("Recipe desctription");
     private JLabel labRecipeTags = new JLabel("Tags (coma separated");
     private JLabel lblRecipesList = new JLabel("Recipes list");
+    // End labels
 
     // Create a buttons
     private JButton btnAddRecipe = new JButton("Add recipe");
     private JButton btnRecipeBack = new JButton("Back");
     private JButton btnSaveRecipe = new JButton("Save recipe");
+    // End buttons
 
     // Create data input
     private JTextField txtRecipeName = new JTextField(30);
@@ -49,7 +55,7 @@ public class RecipeBookGUI extends JFrame {
     // Create a List of recipes
     private JList<String> lstRecipesList = new JList<>(); 
 
-    // Create a Combo box
+    // Create a Combo box for tags
     private JComboBox ctlTags;
 
     // Use the panel to group elements
@@ -57,6 +63,7 @@ public class RecipeBookGUI extends JFrame {
     private JPanel addRecipePanel = new JPanel();
     /* Optional future code
     private JPanel lookForIngridientsPanel = new JPanel(); */  
+    private JPanel topPanel = new JPanel();
 
     private CardLayout cardlayout = new CardLayout();
 
@@ -87,10 +94,14 @@ public class RecipeBookGUI extends JFrame {
         // Section: create main screen
         String[] recipes = recipeBook.recipeList();
         lstRecipesList.setListData(recipes);
+        // Create a intial list or recipes
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(lblRecipesList, BorderLayout.NORTH);
+        topPanel.setLayout(new FlowLayout());
+        topPanel.add(lblRecipesList);
         JComboBox<String> ctlTags = new JComboBox<>(recipeBook.recipeUniqueTags());
-        mainPanel.add(ctlTags, BorderLayout.NORTH);
+        topPanel.add(ctlTags);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        // Create a top element with tag selector
         mainPanel.add(lstRecipesList, BorderLayout.CENTER);
         mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);   
         // End section: create main screen     
@@ -126,8 +137,6 @@ public class RecipeBookGUI extends JFrame {
         btnAddRecipe.addActionListener(saveNewRecipeListener);
         ctlTags.addItemListener(changedComboListener);
         // End section: apply action listeners
-
-
     }
 
     public static void main(String[] args) {
@@ -135,8 +144,7 @@ public class RecipeBookGUI extends JFrame {
         RecipeBookGUI window = new RecipeBookGUI(); // Create an object of the GUI class
         window.setTitle("Recipe book");             // Set window title
         window.setLocationRelativeTo(null);         // Center the frame
-        window.setPreferredSize(new Dimension(200, 300));
-        // window.setContentPane(mainPanel);
+        window.setPreferredSize(new Dimension(300, 400));
         window.pack();                              // Populate a window with elemnts
         window.setVisible(true);                    // Show the frame
     }
@@ -204,7 +212,6 @@ public class RecipeBookGUI extends JFrame {
         public void itemStateChanged(ItemEvent event) {
              if (event.getStateChange() == ItemEvent.SELECTED) {
                     String Tag = (String) event.getItem();
-                    // String Tag = ctlTags.getItem().toString();
                     String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
                     lstRecipesList.setListData(filtredRecipes);
             // If new tag is choosen - show only items with this tag

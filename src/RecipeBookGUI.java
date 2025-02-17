@@ -30,6 +30,7 @@ public class RecipeBookGUI extends JFrame {
     private JMenuItem recipeAdd = new JMenuItem("Add recipe");
     private JMenuItem recipeList = new JMenuItem("List of recipes");
     private JMenuItem recipeFind = new JMenuItem("Find recipe");
+    private JMenuItem recipeRemoveFilter = new JMenuItem("Remove filter");
     /* Optional menu items
     private JMenuItem recipeLookForIngridients = new JMenuItem("Look for ingridients"); */
     // End menu
@@ -45,6 +46,7 @@ public class RecipeBookGUI extends JFrame {
     private JButton btnAddRecipe = new JButton("Add recipe");
     private JButton btnRecipeBack = new JButton("Back");
     private JButton btnSaveRecipe = new JButton("Save recipe");
+    private JButton btnRemoveFilter = new JButton("Remove filter");
     // End buttons
 
     // Create data input
@@ -74,6 +76,7 @@ public class RecipeBookGUI extends JFrame {
     private ActionListener saveRecipeListener = new saveRecipeListener();
     private ActionListener loadRecipeListener = new loadRecipeListener();
     private ActionListener saveNewRecipeListener = new saveNewRecipeListener();
+    private ActionListener removeRecipeFilterListener = new removeRecipeFilterListener();
     private ItemListener  changedComboListener = new changedComboListener();
     // End Action Listener section
 
@@ -87,6 +90,7 @@ public class RecipeBookGUI extends JFrame {
         menuBar.add(fileMenu); 
         recipeMenu.add(recipeAdd);
         recipeMenu.add(recipeList);
+        recipeMenu.add(recipeRemoveFilter);
         menuBar.add(recipeMenu); 
         setJMenuBar(menuBar);
         // End menu section    
@@ -100,6 +104,7 @@ public class RecipeBookGUI extends JFrame {
         topPanel.add(lblRecipesList);
         JComboBox<String> ctlTags = new JComboBox<>(recipeBook.recipeUniqueTags());
         topPanel.add(ctlTags);
+        topPanel.add(btnRemoveFilter);
         mainPanel.add(topPanel, BorderLayout.NORTH);
         // Create a top element with tag selector
         mainPanel.add(lstRecipesList, BorderLayout.CENTER);
@@ -131,11 +136,13 @@ public class RecipeBookGUI extends JFrame {
 
         // Section: Apply action listeners to GUI elements
         recipeAdd.addActionListener(addRecipeListener);
+        recipeRemoveFilter.addActionListener(removeRecipeFilterListener);
         btnRecipeBack.addActionListener(backRecipeListener);
         fileMenuSave.addActionListener(saveRecipeListener);
         fileMenuLoad.addActionListener(loadRecipeListener);
         btnAddRecipe.addActionListener(saveNewRecipeListener);
         ctlTags.addItemListener(changedComboListener);
+        btnRemoveFilter.addActionListener(removeRecipeFilterListener);
         // End section: apply action listeners
     }
 
@@ -215,7 +222,16 @@ public class RecipeBookGUI extends JFrame {
                     String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
                     lstRecipesList.setListData(filtredRecipes);
             // If new tag is choosen - show only items with this tag
-                }
-            }       
+            }
+        }      
+    }
+
+    class removeRecipeFilterListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String recipes[] = recipeBook.recipeList();
+            lstRecipesList.setListData(recipes);
+            // Update list of recipes with all recipes without filter applied
+        }
     }
 }

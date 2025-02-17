@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.lang.System.*;
 import java.util.ArrayList;
+import java.util.Arrays;       // 
 
 public class RecipeBookGUI extends JFrame {  
 
@@ -187,7 +188,9 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             ArrayList<String> ingridients = new ArrayList<String>();
             ArrayList<String> quantity = new ArrayList<String>();
-            ArrayList<String> tags = new ArrayList<String>();
+            //ArrayList<String> tags = new ArrayList<String>();
+            ArrayList<String> tags = new ArrayList<>(Arrays.asList(txtRecipeTags.getText().split(",")));
+            // Create an list of tag from comma-separated String
             String recipeName = txtRecipeName.getText();
             String recipeDescription = txtRecipeDescription.getText();
             Recipe newRecipe = new Recipe(recipeName, recipeDescription, ingridients, quantity, tags);
@@ -217,10 +220,14 @@ public class RecipeBookGUI extends JFrame {
     class changedComboListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
-             if (event.getStateChange() == ItemEvent.SELECTED) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+            // Only update list of recipes if new tag is selected in combobox
                     String Tag = (String) event.getItem();
+                    // Optionally: String Tag = event.getItem().toString();
                     String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
+                    // Create an array of filtred recipe names
                     lstRecipesList.setListData(filtredRecipes);
+                    // Update a list of recipes with new array of recipe names
             // If new tag is choosen - show only items with this tag
             }
         }      

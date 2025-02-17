@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class RecipeBookGUI extends JFrame {  
 
+    private RecipeBook recipeBook = new RecipeBook();
+
 	// create a menubar
     private JMenuBar menuBar = new JMenuBar();
 
@@ -32,6 +34,7 @@ public class RecipeBookGUI extends JFrame {
     private JLabel labRecipeName = new JLabel("Recipe name"); 
     private JLabel labRecipeDescription = new JLabel("Recipe desctription");
     private JLabel labRecipeTags = new JLabel("Tags (coma separated");
+    private JLabel lblRecipesList = new JLabel("Recipes list");
 
     // Create a buttons
     private JButton btnAddRecipe = new JButton("Add recipe");
@@ -45,6 +48,9 @@ public class RecipeBookGUI extends JFrame {
 
     // Create a List of recipes
     private JList<String> lstRecipesList = new JList<>(); 
+
+    // Create a Combo box
+    private JComboBox ctlTags;
 
     // Use the panel to group elements
     private JPanel mainPanel = new JPanel();
@@ -60,10 +66,9 @@ public class RecipeBookGUI extends JFrame {
     private ActionListener backRecipeListener = new backRecipeListener();
     private ActionListener saveRecipeListener = new saveRecipeListener();
     private ActionListener loadRecipeListener = new loadRecipeListener();
-    private ActionListener saveNewRecipeListener = new saveNewRecipeListener(); 
+    private ActionListener saveNewRecipeListener = new saveNewRecipeListener();
+    private ItemListener  changedComboListener = new changedComboListener();
     // End Action Listener section
-
-    private RecipeBook recipeBook = new RecipeBook();
 
 
     public RecipeBookGUI() {
@@ -83,6 +88,9 @@ public class RecipeBookGUI extends JFrame {
         String[] recipes = recipeBook.recipeList();
         lstRecipesList.setListData(recipes);
         mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(lblRecipesList, BorderLayout.NORTH);
+        JComboBox<String> ctlTags = new JComboBox<>(recipeBook.recipeUniqueTags());
+        mainPanel.add(ctlTags, BorderLayout.NORTH);
         mainPanel.add(lstRecipesList, BorderLayout.CENTER);
         mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);   
         // End section: create main screen     
@@ -116,6 +124,7 @@ public class RecipeBookGUI extends JFrame {
         fileMenuSave.addActionListener(saveRecipeListener);
         fileMenuLoad.addActionListener(loadRecipeListener);
         btnAddRecipe.addActionListener(saveNewRecipeListener);
+        ctlTags.addItemListener(changedComboListener);
         // End section: apply action listeners
 
 
@@ -127,6 +136,7 @@ public class RecipeBookGUI extends JFrame {
         window.setTitle("Recipe book");             // Set window title
         window.setLocationRelativeTo(null);         // Center the frame
         window.setPreferredSize(new Dimension(200, 300));
+        // window.setContentPane(mainPanel);
         window.pack();                              // Populate a window with elemnts
         window.setVisible(true);                    // Show the frame
     }
@@ -187,5 +197,18 @@ public class RecipeBookGUI extends JFrame {
             lstRecipesList.setListData(recipes);
             // Update list of recipes with new recipes
         }
+    }
+
+    class changedComboListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+             if (event.getStateChange() == ItemEvent.SELECTED) {
+                    String Tag = (String) event.getItem();
+                    // String Tag = ctlTags.getItem().toString();
+                    String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
+                    lstRecipesList.setListData(filtredRecipes);
+            // If new tag is choosen - show only items with this tag
+                }
+            }       
     }
 }

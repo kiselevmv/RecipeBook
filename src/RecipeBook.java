@@ -5,6 +5,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.HashSet;   // Import the HashSet class
+import java.util.Set;       // Import the Set class
 
 public class RecipeBook implements Serializable{
     private ArrayList<Recipe> recipes;
@@ -12,8 +16,8 @@ public class RecipeBook implements Serializable{
     // Constructor
     public RecipeBook() {
         this.recipes = new ArrayList<>();
-        initializeDefaultRecipes();
-        // recipeBookLoad();
+        // initializeDefaultRecipes();
+        recipeBookLoad();
     }
 
     // Initialize default recipes
@@ -70,6 +74,34 @@ public class RecipeBook implements Serializable{
     		recipeList.add(recipe.getRecipeName());
     	}
     	return recipeList.toArray(new String[0]);
+    }
+
+    // Return a list of recipes filtred by tag
+    public String[] recipeFiltredList(String Tag) {
+    ArrayList<String> recipeFiltredList = new ArrayList();
+        for (Recipe recipe : recipes) {
+            if (recipe.getTags().contains(Tag)) {
+                recipeFiltredList.add(recipe.getRecipeName());
+                // If tag is found - add recipe to a filtred list  
+                // Do nothing otherwise
+            }
+        }
+        return recipeFiltredList.toArray(new String[0]);
+    }
+
+    // Return a list of unique tags
+    public String[] recipeUniqueTags() {
+        ArrayList<String> recipeTags = new ArrayList(); 
+        // List<String> uniqueTags = new List();
+        for (Recipe recipe : recipes) {
+            recipeTags.addAll(recipe.getTags());
+        }
+        // Now recipeTags is a list of all tags from all recipes
+        // This is not optiamal resolution. But only way to improve is is database
+        Set<String> uniqueTags = new HashSet<>(recipeTags);
+        // HashSet could only keep unique elements
+        return uniqueTags.toArray(new String[0]);
+        // convert a Set to String Array before return
     }
 
     // Save to file (serialization)

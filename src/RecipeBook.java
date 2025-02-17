@@ -49,8 +49,14 @@ public class RecipeBook implements Serializable{
     }
 
     // Remove recipe by name
-    public boolean removeRecipe(String recipeName) {
-        return recipes.removeIf(recipe -> recipe.getRecipeName().equalsIgnoreCase(recipeName));
+    public boolean removeRecipeByName(String recipeName) {
+        for (Recipe recipe : recipes) {
+            if (recipe.getRecipeName().equalsIgnoreCase(recipeName)) {
+                recipes.remove(recipe);
+                return true;
+            }
+        }
+        return false;
     }
 
     // Find recipe by name

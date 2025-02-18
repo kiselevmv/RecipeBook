@@ -98,7 +98,8 @@ public class RecipeBook implements Serializable{
     // Return a list of unique tags
     public String[] recipeUniqueTags() {
         ArrayList<String> recipeTags = new ArrayList(); 
-        // List<String> uniqueTags = new List();
+        recipeTags.add("None");
+        // Add default "none" tag to remove filter
         for (Recipe recipe : recipes) {
             recipeTags.addAll(recipe.getTags());
         }

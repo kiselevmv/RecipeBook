@@ -39,8 +39,10 @@ public class RecipeBookGUI extends JFrame {
     // Create a labels
     private JLabel labRecipeName = new JLabel("Recipe name"); 
     private JLabel labRecipeDescription = new JLabel("Recipe desctription");
-    private JLabel labRecipeTags = new JLabel("Tags (coma separated");
+    private JLabel labRecipeTags = new JLabel("Tags (coma separated):");
     private JLabel lblRecipesList = new JLabel("Recipes list");
+    private JLabel lblRecipeIngridients = new JLabel("Recipe ingridients (coma separated):");
+
     // End labels
 
     // Create a buttons
@@ -52,8 +54,10 @@ public class RecipeBookGUI extends JFrame {
 
     // Create data input
     private JTextField txtRecipeName = new JTextField(30);
-    private JTextField txtRecipeDescription = new JTextField(200);
-    private JTextField txtRecipeTags = new JTextField(100);
+    private JTextArea txtRecipeDescription = new JTextArea(5, 40);
+    private JTextField txtRecipeTags = new JTextField(200);
+    private JTextField txtRecipeIngridients = new JTextField(200);
+    // End text data input fields
 
     // Create a List of recipes
     private JList<String> lstRecipesList = new JList<>(); 
@@ -113,13 +117,15 @@ public class RecipeBookGUI extends JFrame {
         // End section: create main screen     
 
         // Section: create add recipe screen
-        addRecipePanel.setLayout(new GridLayout(4, 2));
+        addRecipePanel.setLayout(new GridLayout(5, 2));
         addRecipePanel.add(labRecipeName);
         addRecipePanel.add(txtRecipeName);
         addRecipePanel.add(labRecipeDescription);
         addRecipePanel.add(txtRecipeDescription);
         addRecipePanel.add(labRecipeTags);
         addRecipePanel.add(txtRecipeTags);
+        addRecipePanel.add(lblRecipeIngridients);
+        addRecipePanel.add(txtRecipeIngridients);
         addRecipePanel.add(btnAddRecipe);
         addRecipePanel.add(btnRecipeBack);
         // End section: create add recipe screen
@@ -186,9 +192,9 @@ public class RecipeBookGUI extends JFrame {
     class saveNewRecipeListener implements ActionListener { //inner class
         @Override
         public void actionPerformed(ActionEvent e) {
-            ArrayList<String> ingridients = new ArrayList<String>();
+            // ArrayList<String> ingridients = new ArrayList<String>();
+            ArrayList<String> ingridients = new ArrayList<>(Arrays.asList(txtRecipeIngridients.getText().split(",")));
             ArrayList<String> quantity = new ArrayList<String>();
-            //ArrayList<String> tags = new ArrayList<String>();
             ArrayList<String> tags = new ArrayList<>(Arrays.asList(txtRecipeTags.getText().split(",")));
             // Create an list of tag from comma-separated String
             String recipeName = txtRecipeName.getText();
@@ -198,7 +204,7 @@ public class RecipeBookGUI extends JFrame {
             // Create a record with new recipe
             String recipes[]= recipeBook.recipeList();
             lstRecipesList.setListData(recipes);
-            // Update LisTView with updated recipes list
+            // Update ListView with updated recipes list
             txtRecipeName.setText("");
             txtRecipeDescription.setText("");
             txtRecipeTags.setText("");
@@ -224,10 +230,17 @@ public class RecipeBookGUI extends JFrame {
             // Only update list of recipes if new tag is selected in combobox
                     String Tag = (String) event.getItem();
                     // Optionally: String Tag = event.getItem().toString();
-                    String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
-                    // Create an array of filtred recipe names
-                    lstRecipesList.setListData(filtredRecipes);
-                    // Update a list of recipes with new array of recipe names
+                    if (Tag.equals("None")) {
+                        String recipes[] = recipeBook.recipeList();
+                        lstRecipesList.setListData(recipes);
+                        // If tag == "none" we just remove filter and show all the recipes
+                    } else {
+                        String[] filtredRecipes = recipeBook.recipeFiltredList(Tag);
+                        // Create an array of filtred recipe names
+                        lstRecipesList.setListData(filtredRecipes);
+                        // Update a list of recipes with new array of filtred recipe names   
+                    }
+                    
             // If new tag is choosen - show only items with this tag
             }
         }      

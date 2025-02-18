@@ -42,6 +42,7 @@ public class RecipeBookGUI extends JFrame {
     private JLabel labRecipeTags = new JLabel("Tags (coma separated):");
     private JLabel lblRecipesList = new JLabel("Recipes list");
     private JLabel lblRecipeIngridients = new JLabel("Recipe ingridients (coma separated):");
+    private JLabel lblRecipeQuantities = new JLabel("Quantity of ingridients (coma separated):");
 
     // End labels
 
@@ -57,6 +58,7 @@ public class RecipeBookGUI extends JFrame {
     private JTextArea txtRecipeDescription = new JTextArea(5, 40);
     private JTextField txtRecipeTags = new JTextField(200);
     private JTextField txtRecipeIngridients = new JTextField(200);
+    private JTextField txtRecipeQuantities = new JTextField(200);
     // End text data input fields
 
     // Create a List of recipes
@@ -117,7 +119,7 @@ public class RecipeBookGUI extends JFrame {
         // End section: create main screen     
 
         // Section: create add recipe screen
-        addRecipePanel.setLayout(new GridLayout(5, 2));
+        addRecipePanel.setLayout(new GridLayout(6, 2));
         addRecipePanel.add(labRecipeName);
         addRecipePanel.add(txtRecipeName);
         addRecipePanel.add(labRecipeDescription);
@@ -126,6 +128,8 @@ public class RecipeBookGUI extends JFrame {
         addRecipePanel.add(txtRecipeTags);
         addRecipePanel.add(lblRecipeIngridients);
         addRecipePanel.add(txtRecipeIngridients);
+        addRecipePanel.add(lblRecipeQuantities);
+        addRecipePanel.add(txtRecipeQuantities);
         addRecipePanel.add(btnAddRecipe);
         addRecipePanel.add(btnRecipeBack);
         // End section: create add recipe screen
@@ -194,7 +198,7 @@ public class RecipeBookGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             // ArrayList<String> ingridients = new ArrayList<String>();
             ArrayList<String> ingridients = new ArrayList<>(Arrays.asList(txtRecipeIngridients.getText().split(",")));
-            ArrayList<String> quantity = new ArrayList<String>();
+            ArrayList<String> quantity = new ArrayList<>(Arrays.asList(txtRecipeQuantities.getText().split(",")));
             ArrayList<String> tags = new ArrayList<>(Arrays.asList(txtRecipeTags.getText().split(",")));
             // Create an list of tag from comma-separated String
             String recipeName = txtRecipeName.getText();

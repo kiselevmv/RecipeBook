@@ -17,6 +17,14 @@ public class Recipe implements Serializable {
         this.tags = new ArrayList<>(tags);
     }
 
+    public Recipe() {
+        String recipeName = null;
+        String description = null;
+        ArrayList<String> ingredients = new ArrayList<String>();
+        ArrayList<String> quantity = new ArrayList<String>();
+        ArrayList<String> tags = new ArrayList<String>();
+    }
+
     // Getters
     public String getRecipeName() {
         return recipeName;

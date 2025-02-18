@@ -3,6 +3,8 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.lang.System.*;
 import java.util.ArrayList;
 import java.util.Arrays;       // 
@@ -56,6 +58,7 @@ public class RecipeBookGUI extends JFrame {
     // Create data input
     private JTextField txtRecipeName = new JTextField(30);
     private JTextArea txtRecipeDescription = new JTextArea(5, 40);
+    private JTextArea txtShadow = new JTextArea(5, 40);
     private JTextField txtRecipeTags = new JTextField(200);
     private JTextField txtRecipeIngridients = new JTextField(200);
     private JTextField txtRecipeQuantities = new JTextField(200);
@@ -73,6 +76,7 @@ public class RecipeBookGUI extends JFrame {
     /* Optional future code
     private JPanel lookForIngridientsPanel = new JPanel(); */  
     private JPanel topPanel = new JPanel();
+    private JPanel bottomPanel = new JPanel();
 
     private CardLayout cardlayout = new CardLayout();
 
@@ -85,6 +89,7 @@ public class RecipeBookGUI extends JFrame {
     private ActionListener saveNewRecipeListener = new saveNewRecipeListener();
     private ActionListener removeRecipeFilterListener = new removeRecipeFilterListener();
     private ItemListener  changedComboListener = new changedComboListener();
+    // private ItemListener  selectedRecipeListener = new selectedRecipeListener();
     // End Action Listener section
 
 
@@ -107,15 +112,28 @@ public class RecipeBookGUI extends JFrame {
         lstRecipesList.setListData(recipes);
         // Create a intial list or recipes
         mainPanel.setLayout(new BorderLayout());
-        topPanel.setLayout(new FlowLayout());
+        // topPanel.setLayout(new FlowLayout());
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         topPanel.add(lblRecipesList);
         JComboBox<String> ctlTags = new JComboBox<>(recipeBook.recipeUniqueTags());
         topPanel.add(ctlTags);
         topPanel.add(btnRemoveFilter);
-        mainPanel.add(topPanel, BorderLayout.NORTH);
+        topPanel.add(labRecipeDescription);
+        mainPanel.add(topPanel, BorderLayout.PAGE_START);
         // Create a top element with tag selector
         mainPanel.add(lstRecipesList, BorderLayout.CENTER);
-        mainPanel.add(btnAddRecipe, BorderLayout.SOUTH);   
+        // Create a center element with recipes list
+        // bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.setPreferredSize(new Dimension(200, 100));
+        // bottomPanel.setBackground(Color.blue);
+        bottomPanel.add(labRecipeDescription);
+        bottomPanel.add(new JLabel("Show recipe desctription"));
+        txtShadow.setLineWrap(true);
+        txtShadow.setWrapStyleWord(true);
+        bottomPanel.add(txtShadow);  
+
+        mainPanel.add(bottomPanel, BorderLayout.PAGE_END);
         // End section: create main screen     
 
         // Section: create add recipe screen
@@ -153,6 +171,8 @@ public class RecipeBookGUI extends JFrame {
         fileMenuLoad.addActionListener(loadRecipeListener);
         btnAddRecipe.addActionListener(saveNewRecipeListener);
         ctlTags.addItemListener(changedComboListener);
+        // lstRecipesList.addItemListener(selectedRecipeListener);
+        lstRecipesList.addListSelectionListener(new listValueChanged());
         btnRemoveFilter.addActionListener(removeRecipeFilterListener);
         // End section: apply action listeners
     }
@@ -162,7 +182,7 @@ public class RecipeBookGUI extends JFrame {
         RecipeBookGUI window = new RecipeBookGUI(); // Create an object of the GUI class
         window.setTitle("Recipe book");             // Set window title
         window.setLocationRelativeTo(null);         // Center the frame
-        window.setPreferredSize(new Dimension(300, 400));
+        window.setPreferredSize(new Dimension(400, 500));
         window.pack();                              // Populate a window with elemnts
         window.setVisible(true);                    // Show the frame
     }
@@ -244,11 +264,23 @@ public class RecipeBookGUI extends JFrame {
                         lstRecipesList.setListData(filtredRecipes);
                         // Update a list of recipes with new array of filtred recipe names   
                     }
-                    
             // If new tag is choosen - show only items with this tag
             }
         }      
     }
+
+    class listValueChanged implements ListSelectionListener {
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) { // Prevent multiple triggers
+                String recipeName = lstRecipesList.getSelectedValue();
+                System.out.println(recipeName);
+                Recipe recipe = recipeBook.findRecipe(recipeName);
+                System.out.println(recipe.getRecipeDescription());
+                txtShadow.setText(recipe.getRecipeDescription());
+            }
+        }
+    }
+    
 
     class removeRecipeFilterListener implements ActionListener {
         @Override

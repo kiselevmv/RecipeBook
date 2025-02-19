@@ -1,10 +1,11 @@
 # Project idea
 
-Recipe management system.
+Recipe management system with simple GUI.
 
 ## Problem solving
 
-Store recipes and requirements fo ingridients. 
+Store recipes and requirements to ingridients. 
+Gives easy access to add and view recipes.
 
 ## Key features
 
@@ -12,7 +13,7 @@ Store recipes and requirements fo ingridients.
 2. Store, 
 3. Demonstrate recipes from a database. 
 4. User GUI
-5. Optional: show recipes from a base with selected ingridients.
+5. Optional: show recipes from a base by user-defined tags.
 6. Optional: Export recipes to text (markdown, html, etc.)
 
 ## Time schedule
@@ -54,7 +55,7 @@ Getters:
 13.02 - GUI application
 Main window - Mikhail
 Input recipe window - Mikhail
-Look for recipes with selected ingridients - Mikhail
+Show recipes by tag - Mikhail
 
 
 17.02 - Optional feature and code polishing.  - Arseni & Mikhail

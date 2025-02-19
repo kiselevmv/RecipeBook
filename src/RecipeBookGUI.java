@@ -45,6 +45,7 @@ public class RecipeBookGUI extends JFrame {
     private JLabel lblRecipesList = new JLabel("Recipes list");
     private JLabel lblRecipeIngridients = new JLabel("Recipe ingridients (coma separated):");
     private JLabel lblRecipeQuantities = new JLabel("Quantity of ingridients (coma separated):");
+    private JLabel lblRecipeDectriptionBottom = new JLabel("Recipe desctription");
 
     // End labels
 
@@ -59,6 +60,7 @@ public class RecipeBookGUI extends JFrame {
     private JTextField txtRecipeName = new JTextField(30);
     private JTextArea txtRecipeDescription = new JTextArea(5, 40);
     private JTextArea txtShadow = new JTextArea(5, 40);
+    private JTextArea txtIngridients = new JTextArea(5, 40);
     private JTextField txtRecipeTags = new JTextField(200);
     private JTextField txtRecipeIngridients = new JTextField(200);
     private JTextField txtRecipeQuantities = new JTextField(200);
@@ -125,13 +127,17 @@ public class RecipeBookGUI extends JFrame {
         // Create a center element with recipes list
         // bottomPanel.setLayout(new FlowLayout());
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.setPreferredSize(new Dimension(200, 100));
-        // bottomPanel.setBackground(Color.blue);
-        bottomPanel.add(labRecipeDescription);
-        bottomPanel.add(new JLabel("Show recipe desctription"));
+        bottomPanel.setPreferredSize(new Dimension(500, 300));
+        lblRecipeDectriptionBottom.setHorizontalAlignment(SwingConstants.LEFT);
+        bottomPanel.add(lblRecipeDectriptionBottom);
         txtShadow.setLineWrap(true);
         txtShadow.setWrapStyleWord(true);
+        txtShadow.setEditable(false);
         bottomPanel.add(txtShadow);  
+        bottomPanel.add(new JLabel("Recipe ingridients"));
+        txtIngridients.setLineWrap(true);
+        txtIngridients.setEditable(false);
+        bottomPanel.add(txtIngridients);
 
         mainPanel.add(bottomPanel, BorderLayout.PAGE_END);
         // End section: create main screen     
@@ -182,7 +188,7 @@ public class RecipeBookGUI extends JFrame {
         RecipeBookGUI window = new RecipeBookGUI(); // Create an object of the GUI class
         window.setTitle("Recipe book");             // Set window title
         window.setLocationRelativeTo(null);         // Center the frame
-        window.setPreferredSize(new Dimension(400, 500));
+        window.setPreferredSize(new Dimension(500, 800));
         window.pack();                              // Populate a window with elemnts
         window.setVisible(true);                    // Show the frame
     }
@@ -232,6 +238,8 @@ public class RecipeBookGUI extends JFrame {
             txtRecipeName.setText("");
             txtRecipeDescription.setText("");
             txtRecipeTags.setText("");
+            txtRecipeIngridients.setText("");
+            txtRecipeQuantities.setText("");
             // Clear all fields before new input
         }
     }
@@ -275,8 +283,12 @@ public class RecipeBookGUI extends JFrame {
                 String recipeName = lstRecipesList.getSelectedValue();
                 System.out.println(recipeName);
                 Recipe recipe = recipeBook.findRecipe(recipeName);
-                System.out.println(recipe.getRecipeDescription());
                 txtShadow.setText(recipe.getRecipeDescription());
+                ArrayList<String> ingridients = recipe.getRecipeIngredients();
+                for (String ingridient : ingridients) {
+                    txtIngridients.append(ingridient);
+                    txtIngridients.append("\n");
+                }
             }
         }
     }

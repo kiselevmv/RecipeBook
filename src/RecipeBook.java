@@ -16,8 +16,8 @@ public class RecipeBook implements Serializable{
     // Constructor
     public RecipeBook() {
         this.recipes = new ArrayList<>();
-        initializeDefaultRecipes();
-        // recipeBookLoad();
+        // initializeDefaultRecipes();
+        recipeBookLoad();
     }
 
     // Initialize default recipes
@@ -71,6 +71,8 @@ public class RecipeBook implements Serializable{
             }
         }
         return null;
+        // return null if no recipes found
+        // We could use else branch, but just do not need to
     }
 
     // Return a list of recipes
@@ -135,6 +137,8 @@ public class RecipeBook implements Serializable{
 
         } catch (Exception e) {
             System.out.println("Error loading recipe book: " + e.getMessage());
+            initializeDefaultRecipes();
+            // Initialize recipes book with some default recipes is failed to deserialize class
         }
     }
 }

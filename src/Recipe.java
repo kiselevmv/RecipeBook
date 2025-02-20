@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class Recipe implements Serializable {
     private String recipeName;
     private String description;
-    ArrayList<String> ingredients;
-    ArrayList<String> quantity;
-    ArrayList<String> tags;
+    private ArrayList<String> ingredients;
+    private ArrayList<String> quantity;
+    private ArrayList<String> tags;
 
     // Constructor
     public Recipe(String recipeName, String description, ArrayList<String> ingredients, ArrayList<String> quantity, ArrayList<String> tags) {

@@ -284,6 +284,7 @@ public class RecipeBookGUI extends JFrame {
                 System.out.println(recipeName);
                 Recipe recipe = recipeBook.findRecipe(recipeName);
                 txtShadow.setText(recipe.getRecipeDescription());
+                txtIngridients.setText("");
                 ArrayList<String> ingridients = recipe.getRecipeIngredients();
                 for (String ingridient : ingridients) {
                     txtIngridients.append(ingridient);
